@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+
+kind: Deployment
+metadata:
+  name: service1-deployment
+  labels:
+    app: service-1
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: service-1 
+
+  template:
+    metadata:
+      labels:
+        app: service-1
+    spec:
+      containers:
+      - name: service-1
+        image: keshav1511/service1:v2
+        ports:
+        - containerPort: 8000
+        env:
+          - name: SERVICE2_URL
+            valueFrom:
+              configMapKeyRef:
+                name: service1-config
+                key: SERVICE2_URL

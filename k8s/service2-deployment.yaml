@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+
+kind: Deployment
+metadata:
+  name: service2-deployment
+  labels: 
+    app: service2
+
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: service2
+  
+  template:
+    metadata:
+      labels:
+        app: service2
+    spec:
+      containers:
+      - name: service2
+        image: keshav1511/service-2-db:v1
+        
+        ports:
+        - containerPort: 8001

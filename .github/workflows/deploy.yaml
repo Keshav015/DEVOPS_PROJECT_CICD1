@@ -1,0 +1,35 @@
+name: DEVOPS CI/CD PIPELINE 
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4    
+
+      - name: Docker login
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}  
+      
+      - name: Build and Push Docker Service1 
+        uses: docker/build-push-action@v5
+        with:
+          context: ./service1
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/service1:latest
+        
+      - name: Build and Push Docker Service2
+        uses: docker/build-push-action@v5
+        with:
+          context: ./service2
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/service2:latest
+      
+
