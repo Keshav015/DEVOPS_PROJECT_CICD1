@@ -23,4 +23,6 @@ def doc():
 @app.get("/get")
 def get():
     return{"message":"Hello from Service 1"}
+
+print("Service 1 is running on port 8000")
     
